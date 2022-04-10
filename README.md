@@ -39,6 +39,17 @@ git clone https://github.com/camo6016/ha-jemenaspreadsheet.git jemenaspreadsheet
 
 ## Details about monitoring variables
 
+The name that you set for the sensor in the configuration will determine the operations that are performed on the retreived data set. The dataset is a pandas time serise. In the below code snippet you can see the operations being exicuated.
+
+1. Any string that is valid in a sensor name but does not contain a underscore
+2. Pandas period operation to perform
+    * first and last which use [offset alias's](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases)
+    * head and tail with use a single number to determinne how many lines should be retrived from the start of end of the dataset.
+3. Value which will be passed into the aformentioned period operation
+4. Operation that will be performed on the list of kwh values to make it a single value. Valid options are mean, max, min.
+
+Please see valid offset alias's
+
 ```
 sensor_name_list = self.type.split("_")
 
@@ -86,80 +97,4 @@ sensor:
 
 ```
 
-**Configuration variables:**
-
-- **username** (Required): Username used to log into the Jemena Electricity Outlook website.
-- **password** (Required): Password used to log into the Jemena Electricity Outlook website
-- **monitored_variables** array (Required): Variables to monitor.
-    - **supply_charge** (AUD): **\*\*\*** Daily supply charge to properly
-    - **weekday_peak_cost** (AUD): **\*\*\*** Cost per kilowatt hour for peak usage
-    - **weekday_offpeak_cost** (AUD): **\*\*\*** Cost per kilowatt hour for offpeak usage
-    - **weekday_shoulder_cost** (AUD): **\*\*\*** Cost per kilowatt hour for shoulder usage
-    - **controlled_load_cost** (AUD): **\*\*\*** Cost per kilowatt hour for controlled load usage
-    - **weekend_offpeak_cost** (AUD): **\*\*\*** Cost per kilowatt hour for weekend offpeak usage
-    - **single_rate_cost** (AUD): **\*\*\*** Cost per kilowatt hour for single rate usage
-    - **generation_cost** (AUD): **\*\*\*** Amount paid per kilowatt hour feed into the grid
-    - **yesterday_user_type** (text): Type of grid user [consumer | generator]
-    - **yesterday_usage** (kwh): Net consumption of power usage for yesterday all consumption type - generation
-    - **yesterday_consumption** (kwh): Total of consuption for yesterday
-    - **yesterday_consumption_peak** (kwh): Total peak consumption for yesterday
-    - **yesterday_consumption_offpeak** (kwh): Total offpeak consumption for yesterday
-    - **yesterday_consumption_shoulder** (kwh): Total shoulder consumption for yesterday
-    - **yesterday_consumption_controlled_load** (kwh): Total controlled load consumption for yesterday
-    - **yesterday_generation** (kwh): total of generated electricity feed into the grid for yesterday
-    - **yesterday_cost_total** (AUD): **\*\*\*** Total cost of new consumption for yesterday (concumption - generation) (does not include daily supply)
-    - **yesterday_cost_consumption** (AUD): **\*\*\*** Total cost of consumption for yesterday (does not include daily supply)
-    - **yesterday_cost_generation** (AUD): **\*\*\*** Total cost of generated electricity feed into the grid.
-    - **yesterday_cost_difference** (AUD): **\*\*\*** Difference in cost from previous day
-    - **yesterday_percentage_difference** (%): percentage increase in net consumption compared to previous day
-    - **yesterday_difference_message** (text): Message displayed in Electicity Outlook to describe differnce from previous day
-    - **yesterday_consumption_difference** (KWH): difference in kilowatt hours of net consumption to previous day
-    - **yesterday_consumption_change** (text): One of increase or decrease
-    - **yesterday_suburb_average** (kwh): Average net consumption for entire suburb
-    - **previous_day_usage** (kwh): Net consumption for previous day previous to Yesterday (2 days ago)
-    - **previous_day_consumption** (kwh): Consumption for previous day previous to Yesterday (2 days ago)
-    - **previous_day_generation** (kwh): Generation for previous day previous to Yesterday (2 days ago) feed into grid
-    - this_week_user_type
-    - this_week_usage
-    - this_week_consumption
-    - this_week_consumption_peak
-    - this_week_consumption_offpeak
-    - this_week_consumption_shoulder
-    - this_week_consumption_controlled_load
-    - this_week_generation
-    - this_week_cost_total
-    - this_week_cost_consumption
-    - this_week_cost_generation
-    - this_week_cost_difference
-    - this_week_percentage_difference
-    - this_week_difference_message
-    - this_week_consumption_difference
-    - this_week_consumption_change
-    - this_week_suburb_average
-    - last_week_usage
-    - last_week_consumption
-    - last_week_generation
-    - this_month_user_type
-    - this_month_usage
-    - this_month_consumption
-    - this_month_consumption_peak
-    - this_month_consumption_offpeak
-    - this_month_consumption_shoulder
-    - this_month_consumption_controlled_load
-    - this_month_generation
-    - this_month_cost_total
-    - this_month_cost_consumption
-    - this_month_cost_generation
-    - this_month_cost_difference
-    - this_month_percentage_difference
-    - this_month_difference_message
-    - this_month_consumption_difference
-    - this_month_consumption_change
-    - this_month_suburb_average
-    - last_month_usage
-    - last_month_consumption
-    - last_month_generation
-
-
-\*** For the cost based variables to be reported correctly you must setup your account with your current tarrif from your electricity retailer. These values can be obtained from your latest electricity bill. 
 
