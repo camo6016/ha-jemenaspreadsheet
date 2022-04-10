@@ -42,13 +42,13 @@ git clone https://github.com/camo6016/ha-jemenaspreadsheet.git jemenaspreadsheet
 The name that you set for the sensor in the configuration will determine the operations that are performed on the retreived data set. The dataset is a pandas time serise. In the below code snippet you can see the operations being exicuated.
 
 1. Any string that is valid in a sensor name but does not contain a underscore
-2. Pandas period operation to perform
-    * first and last which use [offset alias's](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases)
-    * head and tail with use a single number to determinne how many lines should be retrived from the start of end of the dataset.
-3. Value which will be passed into the aformentioned period operation
+2. Pandas period operation to perform. Valid operations are;
+    * first and last, which use [offset alias's](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases).
+    * head and tail, with use a single number to determinne how many lines should be retrived from the start of end of the dataset.
+3. Value which will be passed into the aformentioned period operation.
 4. Operation that will be performed on the list of kwh values to make it a single value. Valid options are mean, max, min.
 
-Please see valid offset alias's
+Please see the below a snippet of the code used to perform the calculations.
 
 ```
 sensor_name_list = self.type.split("_")
