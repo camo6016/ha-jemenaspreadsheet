@@ -28,7 +28,7 @@ The custom_components directory does not exist in default installation state and
 <homeassistant-user-configuration-directory>/jemenaspreadsheet/jemenaoutlook/__init__.py
 <homeassistant-user-configuration-directory>/jemenaspreadsheet/jemenaoutlook/manifest.py
 ```
-On some systhems this may be :-
+On some systems this may be :-
 ```
 /home/ha/.homeassistant/custom_components/jemenaspreadsheet/sensor.py
 /home/ha/.homeassistant/custom_components/jemenaspreadsheet/__init__.py
