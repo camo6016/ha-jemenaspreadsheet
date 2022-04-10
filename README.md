@@ -1,4 +1,4 @@
-﻿# ha-jemenaoutlook
+﻿# ha-jemenaspreadsheet
 
 This is a [Home Assistant](https://home-assistant.io) sensor component to retrieve information from the [Jemena Electricity Outlook](https://electricityoutlook.jemena.com.au/) website, they are an electricity distributor within Victoria, Australia.
 
@@ -8,9 +8,9 @@ To use this component you will need to register for an account via the Electrici
 
 If Jemena are not your electricity distributor then this will be of no use to you.
 
-The component will only retrieve Yesterdays usage, which will also retrieve the previous days if you wish do do some other comparisions. It could easily be extended to retrieve weekly, monthly or seasonal figures as well. (I haven't got that far yet)
+The component will download a spreadsheet of your power usage from the Jemena. This spreadsheet contains your half hourly kw/h usage for up to the last two years. By setting the sensor names in the "monitored_variables" list in the configuration.yaml you can perform calculatiuons on the data collected. 
 
-The component is based on an older version of the [Hydro-Québec](https://home-assistant.io/components/sensor.hydroquebec/) energy sensor which is part fo the standard Home Assistant components. Thank you to the writer of that component it helpd a lot.
+The component is based on an [ha-jemenaoutlook](https://github.com/mvandersteen/ha-jemenaoutlook) energy sensor. Both this sensor, and the JemenaOutlook sensor can be run at the same time. The JemenaOutlook sensor pulls data from the GUI and can includes information about expendature. Please review the JemenaOutlook sensor to see if it provides the data you are looking for. Thank you to the writer of the JemenaOutlook component, it helpd a lot.
 
 This component is not endorsed by Jemena, nor have a I asked for their endorsement.
 
@@ -34,7 +34,35 @@ For me this is :-
 
 Or just use git to clone into a jemenaoutlook directory, when using this method make sure teh user home-assistant is running as can read these files.
 ```
-git clone https://github.com/mvandersteen/ha-jemenaoutlook.git jemenaoutlook
+git clone https://github.com/camo6016/ha-jemenaspreadsheet.git jemenaspreadsheet
+```
+
+## Details about monitoring variables
+
+```
+sensor_name_list = self.type.split("_")
+
+# Get Time Period
+if sensor_name_list[1] == "first":
+    df = df.first(sensor_name_list[2])
+elif sensor_name_list[1] == "last":
+    df = df.last(sensor_name_list[2])
+elif sensor_name_list[1] == "head":
+    df = df.head(sensor_name_list[2])
+elif sensor_name_list[1] == "tail":
+    df = df.tail(sensor_name_list[2])
+else:
+    raise Exception("Invalid 2nd or 3rd parameter in name, valid 2nd perams are first, last, head, tail")
+
+# Perform Calculation
+if sensor_name_list[3] == "mean":
+    return df.power.mean()
+elif sensor_name_list[3] == "max":
+    return df.power.max()
+elif sensor_name_list[3] == "min":
+    return df.power.min()
+else:
+    raise Exception("Invalid 4th parameter in name, valid 4nd perams are mean, max, min")
 ```
 
 ## Configuring the sensor
@@ -43,78 +71,19 @@ git clone https://github.com/mvandersteen/ha-jemenaoutlook.git jemenaoutlook
 # Example configuration.yaml entry
 
 sensor:
-  - platform: jemenaoutlook
+  - platform: jemenaspreadsheet
     username: MYUSERNAME
     password: MYPASSWORD
     monitored_variables:
-      - supply_charge
-      - weekday_peak_cost
-      - weekday_offpeak_cost
-      - weekday_shoulder_cost
-      - controlled_load_cost
-      - weekend_offpeak_cost
-      - single_rate_cost
-      - generation_cost
-      - yesterday_user_type
-      - yesterday_usage
-      - yesterday_consumption
-      - yesterday_consumption_peak
-      - yesterday_consumption_offpeak
-      - yesterday_consumption_shoulder
-      - yesterday_consumption_controlled_load
-      - yesterday_generation
-      - yesterday_cost_total
-      - yesterday_cost_consumption
-      - yesterday_cost_generation
-      - yesterday_cost_difference
-      - yesterday_percentage_difference
-      - yesterday_difference_message
-      - yesterday_consumption_difference
-      - yesterday_consumption_change
-      - yesterday_suburb_average
-      - previous_day_usage
-      - previous_day_consumption
-      - previous_day_generation
-      - this_week_user_type
-      - this_week_usage
-      - this_week_consumption
-      - this_week_consumption_peak
-      - this_week_consumption_offpeak
-      - this_week_consumption_shoulder
-      - this_week_consumption_controlled_load
-      - this_week_generation
-      - this_week_cost_total
-      - this_week_cost_consumption
-      - this_week_cost_generation
-      - this_week_cost_difference
-      - this_week_percentage_difference
-      - this_week_difference_message
-      - this_week_consumption_difference
-      - this_week_consumption_change
-      - this_week_suburb_average
-      - last_week_usage
-      - last_week_consumption
-      - last_week_generation
-      - this_month_user_type
-      - this_month_usage
-      - this_month_consumption
-      - this_month_consumption_peak
-      - this_month_consumption_offpeak
-      - this_month_consumption_shoulder
-      - this_month_consumption_controlled_load
-      - this_month_generation
-      - this_month_cost_total
-      - this_month_cost_consumption
-      - this_month_cost_generation
-      - this_month_cost_difference
-      - this_month_percentage_difference
-      - this_month_difference_message
-      - this_month_consumption_difference
-      - this_month_consumption_change
-      - this_month_suburb_average
-      - last_month_usage
-      - last_month_consumption
-      - last_month_generation
+      - power_last_2Y_max    # Get last 2   years  from dataframe and get max
+      - power_last_2Y_min    # Get last 2   years  from dataframe and get min
+      - power_last_2Y_mean   # Get last 2   years  from dataframe and get mean
+      - power_first_10D_mean # Get first 10 days   from dataframe and average them
+      - power_last_10D_mean  # Get last 10  days   from dataframe and average them
+      - power_head_5_mean    # Get first 5  values from dataframe and average them
+      - power_tail_5_mean    # Get last 5   values from dataframe and average them
+
+
 ```
 
 **Configuration variables:**
