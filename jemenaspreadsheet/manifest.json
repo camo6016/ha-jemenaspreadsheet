@@ -4,7 +4,7 @@
   "documentation": "https://github.com/camo6016/ha-jemenaspreadsheet",
   "issue_tracker": "https://github.com/camo6016/ha-jemenaspreadsheetk/issues",
   "dependencies": [],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "codeowners": ["@camo6016"],
   "requirements": [],
   "iot_class": "cloud_polling"
