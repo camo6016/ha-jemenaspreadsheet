@@ -1,1 +1,1 @@
-"""The Jemena Outlook integration."""
+"""The Jemena Spreadsheet integration."""
