@@ -1,4 +1,7 @@
-﻿# ha-jemenaspreadsheet
+﻿# This componant is in development and not currently in a functioning state. Please do not use while this banner exists.
+ 
+ 
+ # ha-jemenaspreadsheet
 
 This is a [Home Assistant](https://home-assistant.io) sensor component to retrieve information from the [Jemena Electricity Outlook](https://electricityoutlook.jemena.com.au/) website, they are an electricity distributor within Victoria, Australia.
 
@@ -21,18 +24,25 @@ Copy the included files (except README.md) to it's own directory called jemenaou
 The custom_components directory does not exist in default installation state and may need to be created.
 
 ```
-<homeassistant-user-configuration-directory>/custom_components/jemenaoutlook/sensor.py
-<homeassistant-user-configuration-directory>/custom_components/jemenaoutlook/__init__.py
-<homeassistant-user-configuration-directory>/custom_components/jemenaoutlook/manifest.py
+<homeassistant-user-configuration-directory>/jemenaspreadsheet/jemenaoutlook/sensor.py
+<homeassistant-user-configuration-directory>/jemenaspreadsheet/jemenaoutlook/__init__.py
+<homeassistant-user-configuration-directory>/jemenaspreadsheet/jemenaoutlook/manifest.py
 ```
-For me this is :-
+On some systhem this may be :-
 ```
-/home/ha/.homeassistant/custom_components/jemenaoutlook/sensor.py
-/home/ha/.homeassistant/custom_components/jemenaoutlook/__init__.py
-/home/ha/.homeassistant/custom_components/jemenaoutlook/manifest.py
+/home/ha/.homeassistant/custom_components/jemenaspreadsheet/sensor.py
+/home/ha/.homeassistant/custom_components/jemenaspreadsheet/__init__.py
+/home/ha/.homeassistant/custom_components/jemenaspreadsheet/manifest.py
 ```
+On my Home Assistant OS deployment, the files that needed to be added where at 
+```
+/config/custom_components/jemenaspreadsheet/sensor.py
+/config/custom_components/jemenaspreadsheet/__init__.py
+/config/custom_components/jemenaspreadsheet/manifest.py
+```
+The config file on my Home Assistant OS deployment was at /config/configuration.yaml . On Home Assistant OS, the way I installed this componant was to install one of the standard SSH plugins which provides access to the operating system.
 
-Or just use git to clone into a jemenaoutlook directory, when using this method make sure teh user home-assistant is running as can read these files.
+You can use git to clone the files onto your system.
 ```
 git clone https://github.com/camo6016/ha-jemenaspreadsheet.git jemenaspreadsheet
 ```
